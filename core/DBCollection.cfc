@@ -92,8 +92,8 @@
 	  result = collection.find( criteria={"AGE" = {"$gt"=18}}, limit="5", sort=sort );
 	  writeDump( var=result.asArray(), label="For query #result.getQuery().toString()# with sort #result.getSort().toString()#, returning #result.size()# of #result.totalCount()# documents" );
 	*/
-	function find( struct criteria="#structNew()#", string keys="", numeric skip=0, numeric limit=0, any sort="#structNew()#" ){
-		var _keys = mongoUtil.createOrderedDBObject(arguments.keys, mongoUtil.newOperationalDBObject());
+	function find( struct criteria="#structNew()#", string keys='', numeric skip=0, numeric limit=0, any sort="#structNew()#" ){
+ 		var _keys = mongoUtil.createOrderedDBObject(keys, mongoUtil.newOperationalDBObject());
 		sort = toMongoOperation( sort );
 		var search_results = [];
 		criteria = toMongo( criteria );

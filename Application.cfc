@@ -9,8 +9,8 @@
 
 	<cfset this.mappings['/cfmongodb'] = variables.mappingBase />
 	<cfset this.mappings['/test'] = variables.mappingBase & 'test' />
-
-	<!--- for zeus
+<!--- 	<cfdump var=#getApplicationMetadata()# abort/>
+ --->	<!--- for zeus
 	<cfset this.wsversion=1> --->
 
 	<cfsetting showdebugoutput="true">

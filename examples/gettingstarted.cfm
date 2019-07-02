@@ -60,8 +60,8 @@ with ColdSpring or WireBox.
 				{NAME="Sidney", AGE=2, HAIR="dirty blonde", DESCRIPTION="ornery" }
 			],
 			BIKE = "Felt",
-			LOVESSQL = true,
-			LOVESMONGO = true,
+			LOVESSQL = "true",
+			LOVESMONGO = "true",
 			TS = now(),
 			COUNTER = 1
 		};
@@ -69,7 +69,7 @@ with ColdSpring or WireBox.
 	writeOutput("<h2>A saved document (struct)</h2>");
 	people.save( doc );
 
-	writeDump( var=doc, label="Saved document", expand="false" );
+	//writeDump( var=doc, label="Saved document", expand="false", abort=true );
 
 	/*
 	* VERY IMPORTANT: ColdFusion will automatically uppercase struct keys if you do not quote them. Consequently, the document will be stored
@@ -127,7 +127,7 @@ with ColdSpring or WireBox.
 	showResult( specialized, "Specialized riders, COUNTER between 1 and 3 Exclusive" );
 
 	//find people with kids aged between 2 and 30
-	kidSearch = people.query().between("KIDS.AGE", 2, 30).find(keys="NAME,COUNTER,KIDS", sort={"COUNTER"=-1});
+	kidSearch = people.query().between("KIDS.AGE", 2, 30).find(sort={"COUNTER"=-1});
 	showResult( kidSearch, "People with kids aged between 2 and 30" );
 
 
@@ -172,7 +172,7 @@ with ColdSpring or WireBox.
 	person = {NAME = "Ima PHP dev", AGE=12};
 	people.save( person );
 
-	people.update( doc = {"$set" = {NAME = "Ima CF Dev", HAPPY = true}}, query= {NAME = "Ima PHP dev"} );
+	people.update( doc = {"$set" = {NAME = "Ima CF Dev", HAPPY = "true"}}, query= {NAME = "Ima PHP dev"} );
 	afterUpdate = people.findById( person["_id"] );
 
 	writeOutput("<h2>Updated person by criteria</h2>");
@@ -183,7 +183,7 @@ with ColdSpring or WireBox.
 	person = {NAME = "Ima PHP dev", AGE=12};
 	people.save( person );
 
-	people.update( doc={NAME = "Ima CF Dev", HAPPY = true}, query= {NAME = "Ima PHP dev"} );
+	people.update( doc={NAME = "Ima CF Dev", HAPPY = "true"}, query= {NAME = "Ima PHP dev"} );
 	afterUpdate = people.findById( person["_id"] );
 
 	writeOutput("<h2>Updated person by criteria with overwrite. Notice it OVERWROTE the entire document because an update modifier ($set, $inc, etc) was not used</h2>");
@@ -209,15 +209,15 @@ with ColdSpring or WireBox.
 	writeDump( var=oldsters, label="Even EmoHipsters get old some day", expand="false");
 
 	//perform an $inc update
-	cast = [{NAME = "Wesley", LIFELEFT=50, TORTUREMACHINE=true},
-		{NAME = "Spaniard", LIFELEFT=42, TORTUREMACHINE=false},
-		{NAME = "Giant", LIFELEFT=6, TORTUREMACHINE=false},
-		{NAME = "Poor Forest Walker", LIFELEFT=60, TORTUREMACHINE=true}];
+	cast = [{NAME = "Wesley", LIFELEFT=50, TORTUREMACHINE="true"},
+		{NAME = "Spaniard", LIFELEFT=42, TORTUREMACHINE="false"},
+		{NAME = "Giant", LIFELEFT=6, TORTUREMACHINE="false"},
+		{NAME = "Poor Forest Walker", LIFELEFT=60, TORTUREMACHINE="true"}];
 
 	people.saveAll( cast );
 
 	suckLifeOut = {"$inc" = {LIFELEFT = -1}};
-	victims = {TORTUREMACHINE = true};
+	victims = {TORTUREMACHINE = "true"};
 	people.update( doc = suckLifeOut, query = victims, multi = true );
 
 	rugenVictims = people.query().$eq("TORTUREMACHINE", true).find().asArray();
@@ -231,14 +231,14 @@ with ColdSpring or WireBox.
 	doc = {
 		NAME = "Marc",
 		BIKE = "Felt",
-		JOYFUL = true
+		JOYFUL = "true"
 	};
-	people.save( doc = doc );
+	people.save(  doc );
 
 	writeOutput("<h2>Upserted document after saving initially</h2>");
 	writeDump( var = doc, label = "Upserted doc: #doc['_id'].toString()#", expand = false);
 
-	doc.WANTSSTOGIE = true;
+	doc.WANTSSTOGIE = "true";
 	people.save( doc = doc );
 
 	writeOutput("<h2>Upserted document after updating</h2>");
@@ -267,12 +267,12 @@ with ColdSpring or WireBox.
 	writeDump(var=nowScheduled, label="findAndModify", expand="false");
 
 
-	writeOutput("<h2>Indexes</h2>");
+/* 	writeOutput("<h2>Indexes</h2>");
 	//here's how to add indexes onto collections for faster querying
 	people.ensureIndex( ["NAME"] );
 	people.ensureIndex( ["BIKE"] );
 	people.ensureIndex( ["KIDS.AGE"] );
-	writeDump(var=people.getIndexes(), label="Indexes", expand="false");
+	writeDump(var=people.getIndexes(), label="Indexes", expand="false"); */
 
 
 

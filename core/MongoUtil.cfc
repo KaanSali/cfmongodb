@@ -141,6 +141,7 @@
 				var key = structKeyList(kv);
 				var value = kv[key];
 			}
+			writeDump(var=key);
 
 			dbObject.append( key, value );
 		}

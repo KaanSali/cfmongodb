@@ -1,4 +1,4 @@
-component{
+	component{
 	this.name = "cfmongodb_people";
 
 
